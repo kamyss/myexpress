@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var loginApi=require('./routes/loginApi');
+var mongoUsers=require('./routes/getMongoUsers');
 
 var app = express();
 
@@ -26,7 +27,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 app.use('/loginApi',loginApi);
-
+app.use('/mongoUsers',mongoUsers);
+//app.use('/mongoUsers/update',mongoUsers.router2);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
