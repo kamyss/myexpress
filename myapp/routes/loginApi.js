@@ -9,10 +9,12 @@ router.post('/',function(req,res){
    // var result=''; 
     console.log("User name = "+user_name+", password is "+password);  
     userList.select(user_name,password).then(function(v){
-        // result=v;
-       var result=JSON.stringify(v);
+        // result=v
+        var params={};
+        params.data=v;
+       //var result=JSON.stringify(data);
       
-        res.end(result); 
+        res.send(params); 
        
     });
     
