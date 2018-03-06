@@ -35,6 +35,7 @@ function userList(userName,password){
     });
 }
 
+
 //读取数据库配置
 function getConnection(){
     
