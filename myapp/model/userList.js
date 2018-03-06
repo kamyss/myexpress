@@ -2,28 +2,33 @@
 
 var mysql=require('mysql');
 var express=require('express');
+var config=require('../conf/config');
 // var bodyParser=require('body-parser');
 // var cookieParser=require('cookie-parser');
 // var session=require('cookie-session');
 
 
 //查询sql语句
-async function select(){
-   var result=await userList();
+async function select(username,password){
+   var result=await userList(username,password);
    return result;
 }
-select().then(function(v){
-    exports.select=v;
-   // console.log(v);
-});
+exports.select=select;
+/*function theUser(userName,password){
+    select(userName,password).then(function(v){
+        exports.select=v;
+       // console.log(v);
+    });
+}*/
+
 //获取用户列表
-function userList(){
+function userList(userName,password){
     var connection=getConnection();
    // console.log(connection);
     return new Promise(function(resolve,reject){
-        var sql="select * from pro_users";
+        var sql="select * from pro_users where username=? and password=?";
        // console.log(connection)
-        connection.query(sql,{},function(err,result){
+        connection.query(sql,[userName,password],function(err,result){
             //console.log(err);
             resolve(result);
         });
@@ -32,15 +37,11 @@ function userList(){
 
 //读取数据库配置
 function getConnection(){
-    // var config=require('../conf/config');
+    
     // console.log(config);
-    var connection=mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: 'root',
-        database:'procedure_test',
-        port:3306
-      });
+   // console.log(config.config);
+   //console.log(config.config);
+    var connection=mysql.createConnection(config.config);
     connection.connect();
     return connection;
 }
